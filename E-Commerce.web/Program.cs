@@ -1,4 +1,5 @@
 
+using System.Reflection.Metadata;
 using Domain.Contracts;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Data;
@@ -23,6 +24,7 @@ namespace E_Commerce.web
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
             builder.Services.AddScoped<IDbInitilizer,DBInitializer>();
+             builder.Services.AddAutoMapper(typeof(AssemblyReference).Assembly);
 
 
             #endregion
