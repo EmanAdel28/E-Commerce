@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using Domain.Models.Products;
 using Shared.DTO_S;
 
 namespace Services.MappingProfile
@@ -12,8 +13,12 @@ namespace Services.MappingProfile
     {
         public ProductProfile()
         { 
-            CreateMap<Product ,ProductDto>()
-                .ForMember(Dist=>Dist.BrandName , options => options.MapFrom(Src=>Src.BrandName));
+            CreateMap<Products ,ProductDto>()
+                .ForMember(Dist=>Dist.BrandName , options => options.MapFrom(Src=>Src.Brand.Name))
+                .ForMember(Dist=>Dist.TypeName , options => options.MapFrom(Src=>Src.Type.Name));
+
+            CreateMap<ProductBrand, BrandDto>();
+            CreateMap<ProductType, TypeDto>();
         
         }
     }

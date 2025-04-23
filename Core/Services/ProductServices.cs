@@ -11,7 +11,7 @@ using Shared.DTO_S;
 
 namespace Services
 {
-    public class ProductServices(IUnitOfWork unitOfWork , Mapper mapper) : IProductServices
+    public class ProductServices(IUnitOfWork unitOfWork , IMapper mapper) : IProductServices
     {
 
         public async Task<IEnumerable<ProductDto>> GetAllProductsAsync()
