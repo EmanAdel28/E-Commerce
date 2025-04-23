@@ -10,4 +10,9 @@
     <ProjectReference Include="..\..\Core\Abstraction\Abstraction.csproj" />
   </ItemGroup>
 
+	<ItemGroup>
+		<FrameWorkReference Include ="Microsoft.AspNetCore.App ">
+			</FrameWorkReference>
+	</ItemGroup>
+
 </Project>
