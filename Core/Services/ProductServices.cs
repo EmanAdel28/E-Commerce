@@ -7,6 +7,7 @@ using Abstraction;
 using AutoMapper;
 using Domain.Contracts;
 using Domain.Models.Products;
+using Services.Specification;
 using Shared.DTO_S;
 
 namespace Services
@@ -17,7 +18,8 @@ namespace Services
         public async Task<IEnumerable<ProductDto>> GetAllProductsAsync()
         {
             var _Repository = unitOfWork.GetRepository<Products, int>();
-            var products = await _Repository.GetAllAsync();
+            var spec = new ProductWithBrandAndYypeSpecifications();
+            var products = await _Repository.GetAllAsync(spec);
             var MappedProduct = Mapper.Map<IEnumerable<Products>, IEnumerable<ProductDto>>(products);
             return MappedProduct;
         }

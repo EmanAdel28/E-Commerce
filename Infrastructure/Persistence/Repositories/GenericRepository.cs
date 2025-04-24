@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Abstraction;
 using Domain.Contracts;
 using Domain.Models;
 using Microsoft.EntityFrameworkCore;
@@ -29,8 +30,15 @@ namespace Persistence.Repositories
         public void Delete(TEntity entity)
        => context.Set<TEntity>().Remove(entity);
 
+        public async Task<IEnumerable<TEntity>> GetAllAsync(ISpecifications<TEntity, IKey> spec)
+        {
+            return await SpecificationEvaluator.CreateQuery(context.Set<TEntity>(), spec).ToListAsync();
+        }
 
-
+        public async Task<TEntity> GetByIdAsync(ISpecifications<TEntity, IKey> spec)
+        {
+            return await SpecificationEvaluator.CreateQuery(context.Set<TEntity>(), spec).FirstOrDefaultAsync();
+        }
     }
 
 }
