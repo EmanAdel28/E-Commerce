@@ -59,6 +59,8 @@ namespace E_Commerce.web
 
             app.MapControllers();
 
+            app.UseStaticFiles();
+
 
             #endregion
             app.Run();
