@@ -4,8 +4,9 @@ using Domain.Contracts;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Data;
 using Persistence.Repositories;
-using AutoMapper;
+
 using Abstraction;
+using Services;
 
 namespace E_Commerce.web
 {
@@ -29,7 +30,8 @@ namespace E_Commerce.web
             builder.Services.AddScoped<IDbInitilizer,DBInitializer>();
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddAutoMapper(typeof(AssemblyReference).Assembly);
-            builder.Services.AddScoped<IServicesManager , IServicesManager>();
+            builder.Services.AddScoped<IServicesManager, ServiceManager>();
+
 
 
 
