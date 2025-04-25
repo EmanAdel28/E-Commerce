@@ -30,16 +30,16 @@ namespace Services.Specification
         #endregion
 
         #region OrderBy
-        public Expression<Func<TEntity, bool>>? OrderBy {  get;private set; }
+        public Expression<Func<TEntity, object>>? OrderBy {  get;private set; }
 
-        public Expression<Func<TEntity, bool>>? OrderByDesc { get; private set; }
+        public Expression<Func<TEntity, object>>? OrderByDesc { get; private set; }
 
-        protected void AddOrderBy(Expression<Func<TEntity, bool>>? OrderByExpression)
+        protected void AddOrderBy(Expression<Func<TEntity, object>>? OrderByExpression)
         {
             OrderBy = OrderByExpression;
         }
 
-        protected void AddOrderByDesc(Expression<Func<TEntity, bool>>? OrderByDescExpression)
+        protected void AddOrderByDesc(Expression<Func<TEntity, object>>? OrderByDescExpression)
         {
             OrderByDesc = OrderByDescExpression;
         }

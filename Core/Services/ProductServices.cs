@@ -16,10 +16,10 @@ namespace Services
     public class ProductServices(IUnitOfWork unitOfWork , IMapper mapper) : IProductServices
     {
 
-        public async Task<IEnumerable<ProductDto>> GetAllProductsAsync(int? brandId, int? TypeId , ProductSortingOption sortingOption)
+        public async Task<IEnumerable<ProductDto>> GetAllProductsAsync(ProductQueryParams productQueryParams)
         {
             var _Repository = unitOfWork.GetRepository<Products, int>();
-            var spec = new ProductWithBrandAndYypeSpecifications(brandId,TypeId,sortingOption);
+            var spec = new ProductWithBrandAndYypeSpecifications(productQueryParams);
             var products = await _Repository.GetAllAsync(spec);
             var MappedProduct = mapper.Map<IEnumerable<Products>, IEnumerable<ProductDto>>(products);
             return MappedProduct;
