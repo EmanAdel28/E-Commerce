@@ -45,6 +45,23 @@ namespace Services.Specification
         }
         #endregion
 
+        #region Pagination
+
+        public int Skip { get; private set; }
+
+        public int Take { get; private set; }
+
+        public bool IsPaginated { get ; set ; }
+
+        protected void ApplyPagination(int pageSize , int PageIngex)
+        {
+            IsPaginated = true;
+            Take = pageSize;
+            Skip = (PageIngex-1)*pageSize;
+        }
+
+        #endregion
+
 
     }
 }

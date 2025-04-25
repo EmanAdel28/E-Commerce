@@ -31,6 +31,11 @@ namespace Abstraction
                 Query = spec.IncludeExpressions.Aggregate(Query, (CurrentQuery, Exp) => CurrentQuery.Include(Exp));
             }
 
+            if(spec.IsPaginated == true)
+            {
+                Query = Query.Skip(spec.Skip).Take(spec.Take);
+            }
+
             return Query;
         }
     }

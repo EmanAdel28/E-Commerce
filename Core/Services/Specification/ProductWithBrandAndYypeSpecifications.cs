@@ -41,6 +41,8 @@ namespace Services.Specification
 
             }
 
+            ApplyPagination(ProductQueryParams.PageSize, ProductQueryParams.PageIndex);
+
         }
 
         public ProductWithBrandAndYypeSpecifications(int id):base(p=>p.Id == id)
