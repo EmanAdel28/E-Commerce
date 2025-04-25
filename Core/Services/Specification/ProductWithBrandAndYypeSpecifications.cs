@@ -4,15 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Domain.Models.Products;
+using Microsoft.IdentityModel.Tokens;
 using Shared;
 
 namespace Services.Specification
 {
     public class ProductWithBrandAndYypeSpecifications:BaseSpecifications<Products,int>
     {
-        public ProductWithBrandAndYypeSpecifications(ProductQueryParams ProductQueryParams) :base
-            (p=>(!ProductQueryParams.BrandId.HasValue || p.BrandId== ProductQueryParams.BrandId)
-            &&(!ProductQueryParams.TypeId.HasValue || p.TypeId== ProductQueryParams.TypeId))
+        public ProductWithBrandAndYypeSpecifications(ProductQueryParams ProductQueryParams) : base
+            (p => (!ProductQueryParams.BrandId.HasValue || p.BrandId == ProductQueryParams.BrandId)
+            && (!ProductQueryParams.TypeId.HasValue || p.TypeId == ProductQueryParams.TypeId)
+            && (string.IsNullOrEmpty(ProductQueryParams.SearchValue) || p.Name.ToLower().Contains(ProductQueryParams.SearchValue.ToLower())))
+           
         {
             AddInclude(P=>P.Brand);
             AddInclude(P=>P.Type);
