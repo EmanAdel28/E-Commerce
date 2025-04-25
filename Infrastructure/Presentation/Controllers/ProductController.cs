@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Abstraction;
 using Microsoft.AspNetCore.Mvc;
+using Shared;
 using Shared.DTO_S;
 
 namespace Presentation.Controllers
@@ -14,9 +15,9 @@ namespace Presentation.Controllers
     public class ProductController(IServicesManager servicesManager) :ControllerBase
     {
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ProductDto>>> GetAllProducts(int? brandId , int? TypeId)
+        public async Task<ActionResult<IEnumerable<ProductDto>>> GetAllProducts(int? brandId , int? TypeId , ProductSortingOption sortingOption)
         {
-            var products = await servicesManager.ProductServices.GetAllProductsAsync(brandId,TypeId);
+            var products = await servicesManager.ProductServices.GetAllProductsAsync(brandId,TypeId , sortingOption);
             return Ok(products);
         }
 

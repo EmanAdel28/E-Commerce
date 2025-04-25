@@ -19,6 +19,13 @@ namespace Abstraction
             if (spec.Criteria is not null)
                 Query = Query.Where(spec.Criteria);
 
+            if (spec.OrderBy is not null)
+                Query = Query.OrderBy(spec.OrderBy);
+
+            if (spec.OrderByDesc is not null)
+                Query = Query.OrderBy(spec.OrderByDesc);
+
+
             if (spec.IncludeExpressions is not null && spec.IncludeExpressions.Count > 0)
             {
                 Query = spec.IncludeExpressions.Aggregate(Query, (CurrentQuery, Exp) => CurrentQuery.Include(Exp));
