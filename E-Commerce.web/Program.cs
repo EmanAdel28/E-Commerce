@@ -8,6 +8,8 @@ using Persistence.Repositories;
 using Abstraction;
 using Services;
 using E_Commerce.web.CustomerMiddlewares;
+using Microsoft.AspNetCore.Mvc;
+using Shared.ErrorModel;
 
 namespace E_Commerce.web
 {
@@ -32,6 +34,22 @@ namespace E_Commerce.web
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddAutoMapper(typeof(AssemblyReference).Assembly);
             builder.Services.AddScoped<IServicesManager, ServiceManager>();
+            builder.Services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.InvalidModelStateResponseFactory = (context) =>
+                {
+                    var Errors = context.ModelState.Where(M => M.Value.Errors.Any()).Select(M => new ValidationError()
+                    {
+                        Field = M.Key,
+                        Errors = M.Value.Errors.Select(E => E.ErrorMessage)
+                    });
+                    var Response = new ValidationErrorToReturn()
+                    {
+                        ValidationErrors = Errors
+                    };
+                    return new BadRequestObjectResult(Response);
+                };
+            });
 
 
 
