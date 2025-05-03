@@ -23,7 +23,9 @@ namespace Services
             var products = await _Repository.GetAllAsync(spec);
             var MappedProduct = mapper.Map<IEnumerable<Products>, IEnumerable<ProductDto>>(products);
             var CountedProducts = products.Count();
-            return new PaginatedResult<ProductDto>(productQueryParams.PageIndex, CountedProducts, 0, MappedProduct);
+            var CountSpec = new ProductCountSpecification(productQueryParams);
+            var TotalCount=await _Repository.CountAsync(CountSpec);
+            return new PaginatedResult<ProductDto>(productQueryParams.PageIndex, CountedProducts, TotalCount, MappedProduct);
            
         }
         public async Task<IEnumerable<BrandDto>> GetAllBrandsAsync()
