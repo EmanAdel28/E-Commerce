@@ -20,6 +20,16 @@ namespace E_Commerce.web.CustomerMiddlewares
             try
             {
                 await next.Invoke(httpContext);
+                if(httpContext.Response.StatusCode== StatusCodes.Status404NotFound)
+                {
+                    var Response = new ErrorToReturn()
+                    {
+                        StatusCode = httpContext.Response.StatusCode,
+                        ErrorMessage = $"End Point {httpContext.Request.Path} is not Founded!"
+                    };
+                    var ResponseToReturn = JsonSerializer.Serialize(Response);
+                    await httpContext.Response.WriteAsync(ResponseToReturn);
+                }
             }
             catch (Exception ex)
             {
