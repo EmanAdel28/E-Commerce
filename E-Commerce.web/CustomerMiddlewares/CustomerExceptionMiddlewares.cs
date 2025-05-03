@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using Domain.Exceptions;
 using Shared.ErrorModel;
 
 namespace E_Commerce.web.CustomerMiddlewares
@@ -27,7 +28,12 @@ namespace E_Commerce.web.CustomerMiddlewares
 
                 //response
                 //1. Set StatusCode For Response
-                httpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
+                httpContext.Response.StatusCode = ex switch
+                {
+                    NotFoundExceptions => StatusCodes.Status404NotFound,
+                    _ => StatusCodes.Status500InternalServerError
+                };
+                    
 
                 //.2 Set Content Type For Response
                 httpContext.Response.ContentType = "application/json";
