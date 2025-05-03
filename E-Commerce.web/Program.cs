@@ -7,6 +7,7 @@ using Persistence.Repositories;
 
 using Abstraction;
 using Services;
+using E_Commerce.web.CustomerMiddlewares;
 
 namespace E_Commerce.web
 {
@@ -36,9 +37,11 @@ namespace E_Commerce.web
 
 
             #endregion
-
-            #region Configure
             var app = builder.Build();
+            #region Configure
+
+            app.UseMiddleware<CustomerExceptionMiddlewares>();
+
 
             using var Scope = app.Services.CreateScope();
             var dbInitializer = Scope.ServiceProvider.GetRequiredService<IDbInitilizer>();
