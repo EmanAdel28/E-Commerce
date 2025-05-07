@@ -10,6 +10,7 @@ using Services;
 using E_Commerce.web.CustomerMiddlewares;
 using Microsoft.AspNetCore.Mvc;
 using Shared.ErrorModel;
+using StackExchange.Redis;
 
 namespace E_Commerce.web
 {
@@ -30,6 +31,12 @@ namespace E_Commerce.web
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
+
+            builder.Services.AddSingleton<IConnectionMultiplexer>((_) =>
+            {
+                return ConnectionMultiplexer.Connect(builder.Configuration.GetConnectionString("RedisConnectionString"));
+            });
+
             builder.Services.AddScoped<IDbInitilizer,DBInitializer>();
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddAutoMapper(typeof(AssemblyReference).Assembly);
