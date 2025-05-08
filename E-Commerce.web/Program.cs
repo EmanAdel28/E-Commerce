@@ -57,6 +57,7 @@ namespace E_Commerce.web
                     return new BadRequestObjectResult(Response);
                 };
             });
+            builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 
 
 
