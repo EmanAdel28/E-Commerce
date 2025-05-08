@@ -36,6 +36,10 @@ namespace E_Commerce.web
             {
                 return ConnectionMultiplexer.Connect(builder.Configuration.GetConnectionString("RedisConnectionString"));
             });
+            builder.Services.AddDbContext<StoredIdentityDbContext>(options =>
+            {
+                options.UseSqlServer(builder.Configuration.GetConnectionString("IdentityConnection"));
+            });
 
             builder.Services.AddScoped<IDbInitilizer,DBInitializer>();
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
