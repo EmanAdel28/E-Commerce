@@ -9,9 +9,16 @@ using Domain.Contracts;
 
 namespace Services
 {
-    public class ServiceManager(IUnitOfWork unitOfWork , IMapper mapper) : IServicesManager
+    public class ServiceManager(IUnitOfWork unitOfWork , IMapper mapper , IBasketRepository basketRepository) : IServicesManager
     {
-        private readonly Lazy<IProductServices> _LazyProductServices = new Lazy<IProductServices>(()=> new ProductServices(unitOfWork, mapper));
+        #region ProductServices
+        private readonly Lazy<IProductServices> _LazyProductServices = new Lazy<IProductServices>(() => new ProductServices(unitOfWork, mapper));
         public IProductServices ProductServices => _LazyProductServices.Value;
+        #endregion
+
+        #region BasketServices
+        private readonly Lazy<IBasketServices> _LazyBasketServices = new Lazy<IBasketServices>(() => new BasketServicses(basketRepository, mapper));
+        public IBasketServices BasketServices => _LazyBasketServices.Value; 
+        #endregion
     }
 }

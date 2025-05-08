@@ -28,7 +28,7 @@ namespace Persistence.Repositories
         #endregion
 
         #region CreateOrUpdateBasketAsync
-        public async Task<CustomerBasket?> CreateOrUpdateBasketAsync(CustomerBasket customerBasket, TimeSpan? timeSpan)
+        public async Task<CustomerBasket?> CreateOrUpdateBasketAsync(CustomerBasket customerBasket)
         {
             var jsonBasket = JsonSerializer.Serialize(customerBasket);
             var IsCreatedOrUpdated = await _database.StringSetAsync(customerBasket.Id, jsonBasket, TimeSpan.FromDays(30));
