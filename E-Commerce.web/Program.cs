@@ -11,6 +11,8 @@ using E_Commerce.web.CustomerMiddlewares;
 using Microsoft.AspNetCore.Mvc;
 using Shared.ErrorModel;
 using StackExchange.Redis;
+using Domain.Models.Identity;
+using Microsoft.AspNetCore.Identity;
 
 namespace E_Commerce.web
 {
@@ -62,6 +64,7 @@ namespace E_Commerce.web
                 };
             });
             builder.Services.AddScoped<IBasketRepository, BasketRepository>();
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<StoredIdentityDbContext>();
 
 
 
@@ -76,7 +79,7 @@ namespace E_Commerce.web
             using var Scope = app.Services.CreateScope();
             var dbInitializer = Scope.ServiceProvider.GetRequiredService<IDbInitilizer>();
             await dbInitializer.InitializerAsync();
-
+            await dbInitializer.IdentityIntializeAsync(();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

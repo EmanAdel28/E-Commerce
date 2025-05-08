@@ -5,13 +5,17 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Domain.Contracts;
+using Domain.Models.Identity;
 using Domain.Models.Products;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Persistence.Data
-{
-    public class DBInitializer(StoreDbContext context) : IDbInitilizer
+{ 
+    public class DBInitializer(StoreDbContext context , UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, StoredIdentityDbContext storedIdentityDbContext) : IDbInitilizer
     {
+     
+
         public async Task InitializerAsync()
         {
             if ((await context.Database.GetAppliedMigrationsAsync()).Any())
@@ -56,5 +60,37 @@ namespace Persistence.Data
                 }
             }
         }
+
+        public async Task IdentityIntializeAsync()
+        {
+            if(!roleManager.Roles.Any())
+            {
+                await roleManager.CreateAsync(new IdentityRole("Admin"));
+                await roleManager.CreateAsync(new IdentityRole("SuperAdmin"));
+            }
+
+            if(userManager.Users.Any())
+            {
+                var User1 = new ApplicationUser()
+                {
+                    Email = "Ahmed@gmail.com",
+                    DisplayName = "Ahmed Nasser",
+                    PhoneNumber = "1234567890",
+                    UserName = "AhmedNasser"
+                },
+                var User1 = new ApplicationUser()
+                {
+                    Email = "Ahmed@gmail.com",
+                    DisplayName = "Ahmed Nasser",
+                    PhoneNumber = "1234567890",
+                    UserName = "AhmedNasser"
+                };
+                await userManager.CreateAsync(User1, "Admin");
+                await userManager.CreateAsync(User2, "SuperAdmin");
+            }
+            await storedIdentityDbContext.SaveChangesAsync();
+           
+        }
+        
     }
 }
